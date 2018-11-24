@@ -1,0 +1,19 @@
+--- # cron module example 
+- hosts: all
+  connection: ssh
+  gather_facts: yes
+  become: no
+  vars_files:
+    - conf/credentials.yml
+    - conf/copyright.yml
+    - conf/webdefaults.yml
+    - conf/users.yml
+  tasks:
+  - name: Create cron job
+    cron:
+      name: "list dirs"
+      job: "ls /var/log > /home/test/cron.log"
+      hour: 1
+      minute: 0
+      user: test
+

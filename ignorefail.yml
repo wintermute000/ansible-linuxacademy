@@ -1,0 +1,20 @@
+--- # Ignore example
+- hosts: webhosts
+  connection: ssh
+  gather_facts: no
+  become: yes
+  vars_files:
+    - conf/credentials.yml
+    - conf/copyright.yml
+    - conf/webdefaults.yml
+    - conf/users.yml
+  tasks:
+    - name: Failed task
+      command: /bin/false
+      ignore_errors: yes
+    - name: Install telnet
+      yum:
+        name: telnet
+        state: present
+      notify: web_server_installed
+ 

@@ -1,0 +1,18 @@
+--- # create user and subelements module example 
+- hosts: all
+  connection: ssh
+  gather_facts: yes
+  become: yes
+  vars_files:
+  - vars/users.yml
+  tasks:
+  - name: Create users
+    user:
+      name: "{{ item.name }}"
+      comment: "{{ item.comment }}"
+      state: present
+      groups: "{{ item.groups }}"
+      append: yes 
+
+    loop: "{{ users }}"
+      

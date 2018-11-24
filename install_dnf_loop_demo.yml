@@ -1,0 +1,41 @@
+--- # Install DNF repositories
+- hosts: all
+  connection: ssh
+  gather_facts: yes
+  become: yes
+  vars_files:
+    - conf/credentials.yml
+    - conf/copyright.yml
+    - conf/webdefaults.yml
+    - conf/users.yml
+  tasks:
+    - name: Make sure wget is installed
+      yum:
+        name: "wget"
+        state: present
+
+    - name: WGET Springdale (SDL) Repos
+      get_url:
+        url: "{{ item }}"
+        dest: /tmp 
+        force: yes
+      when: 
+        - ansible_distribution == "CentOS"
+      loop:
+        - http://springdale.math.ias.edu/data/puias/unsupported/7/x86_64/dnf-0.6.4-2.sdl7.noarch.rpm
+        - http://springdale.math.ias.edu/data/puias/unsupported/7/x86_64/dnf-conf-0.6.4-2.sdl7.noarch.rpm
+        - http://springdale.math.ias.edu/data/puias/unsupported/7/x86_64/python-dnf-0.6.4-2.sdl7.noarch.rpm
+      notify: wget_completed
+
+    - meta: flush_handlers
+
+  handlers:
+    - name: wget_completed
+      yum:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - /tmp/dnf-conf-0.6.4-2.sdl7.noarch.rpm
+        - /tmp/python-dnf-0.6.4-2.sdl7.noarch.rpm
+        - /tmp/dnf-0.6.4-2.sdl7.noarch.rpm
+ 

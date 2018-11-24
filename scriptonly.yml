@@ -1,0 +1,19 @@
+--- # script that only runs if log file doesn't exist example 
+- hosts: all
+  connection: ssh
+  gather_facts: yes
+  become: yes
+  vars_files:
+    - conf/credentials.yml
+    - conf/copyright.yml
+    - conf/webdefaults.yml
+    - conf/users.yml
+  tasks:
+  - name: Execute script remotely
+    script: /home/test/playbooks/files/testscript.sh 
+    args:
+      creates: stdout.log
+    register: script_output
+
+  - debug: 
+      var: script_output

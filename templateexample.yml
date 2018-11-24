@@ -1,0 +1,19 @@
+--- # Templating example
+- hosts: webhosts
+  connection: ssh
+  gather_facts: yes
+  become: no
+  vars_files:
+    - conf/credentials.yml
+    - conf/copyright.yml
+    - conf/webdefaults.yml
+    - conf/users.yml
+  tasks:
+    - name: Create example template
+      template:
+        src: templates/test.j2
+        dest: /home/test/test.conf
+        owner: test
+        group: test
+        mode: '750'
+ 

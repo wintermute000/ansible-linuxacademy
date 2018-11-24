@@ -1,0 +1,23 @@
+--- # Prompt the install package
+- hosts: webhosts
+  connection: ssh
+  gather_facts: no
+  become: yes
+  vars_files:
+    - conf/credentials.yml
+    - conf/copyright.yml
+    - conf/webdefaults.yml
+  vars:
+    - playbook_version: '0.2'
+  vars_prompt:
+    - name: "package"
+      prompt: "Input package to install (default is telnet)"
+      private: no
+  tasks:
+    - name: install package
+      yum: 
+        name: "{{ package | default('telnet', true) }}"
+        state: present
+      register: install_result
+    - name: print installation result
+      debug: var=install_result.results

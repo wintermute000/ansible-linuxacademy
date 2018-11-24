@@ -1,0 +1,26 @@
+--- # wait_for demonstration
+- hosts: webhosts  
+  connection: ssh    
+  become: yes        
+  gather_facts: no   
+  tasks:             
+    - name: Install Apache Tomcat
+      yum:
+        name: tomcat
+        state: installed
+      notify:
+        - Start Tomcat 
+    - meta: flush_handlers
+    - name: Wait until port 8080 is listening
+      wait_for:
+        port: 8080
+        state: started
+    - name: Check if Lynx is installed
+      yum:
+        name: lynx
+        state: present
+  handlers:
+    - name: Start Tomcat
+      service:
+        name: tomcat
+        state: restarted

@@ -1,0 +1,13 @@
+---
+users:
+  - name: "tstuser1"
+    comment: "test user 1"
+    groups:
+      - "wheel"
+      - "johannlo"
+  - name: "tstuser2"
+    comment: "test user 2"
+    groups:
+      - "wheel"
+      - "test"
+

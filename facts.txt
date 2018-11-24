@@ -1,0 +1,18 @@
+test2 | SUCCESS => {
+    "ansible_facts": {
+        "ansible_interfaces": [
+            "lo", 
+            "eth0"
+        ]
+    }, 
+    "changed": false
+}
+test3 | SUCCESS => {
+    "ansible_facts": {
+        "ansible_interfaces": [
+            "lo", 
+            "eth0"
+        ]
+    }, 
+    "changed": false
+}

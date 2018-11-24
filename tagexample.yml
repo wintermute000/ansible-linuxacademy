@@ -1,0 +1,27 @@
+--- # Prompt the install package
+- hosts: webhosts
+  connection: ssh
+  gather_facts: no
+  become: yes
+  vars_files:
+    - conf/credentials.yml
+    - conf/copyright.yml
+    - conf/webdefaults.yml
+  vars:
+    - playbook_version: '0.2'
+  tasks:
+    - name: install package
+      yum: 
+        name: '{{ item }}'
+        state: present
+      register: install_result
+      loop:
+        - 'telnet'
+        - 'lynx'
+      tags:
+        - 'packages'
+
+    - name: verify telnet installation
+      shell: 'yum list installed | grep telnet > pkg.log'
+      tags:
+        - 'logging'

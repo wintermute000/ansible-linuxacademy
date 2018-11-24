@@ -1,0 +1,5 @@
+---
+- user_list:
+  - user_name: virtual_guy1
+  - user_name: virtual_guy2
+  - user_name: virtual_guy3

@@ -1,0 +1,30 @@
+---
+- hosts: webhosts
+  vars_files:
+    - ./conf/credentials.yml
+  become: yes
+  tasks:
+    - name: Install lynx
+      yum:
+        name: lynx
+        state: installed
+
+    - name: Check telnet package installation status
+      yum:
+        name: telnet
+        state: present
+
+- hosts: apphosts
+  vars_files:
+    - ./conf/credentials.yml
+  become: yes
+  tasks:  
+    - name: Install lynx
+      yum:
+        name: lynx
+        state: installed
+
+    - name: Check telnet package installation status
+      yum:
+        name: telnet
+        state: present

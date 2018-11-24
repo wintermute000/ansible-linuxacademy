@@ -1,0 +1,15 @@
+--- # My First Playbook
+- hosts: webhosts
+  connection: ssh
+  gather_facts: no
+  become: yes
+  vars_files:
+    - conf/credentials.yml
+    - conf/copyright.yml
+    - conf/webdefaults.yml
+    - conf/users.yml
+  tasks:
+    - name: Create users
+      user:
+        name: "{{ item.user_name }}"
+      with_items: "{{ user_list }}"

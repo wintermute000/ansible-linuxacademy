@@ -1,0 +1,24 @@
+--- # My First Playbook
+- hosts: webhosts
+  connection: ssh
+  gather_facts: yes
+  become: yes
+  vars_files:
+    - conf/credentials.yml
+    - conf/copyright.yml
+    - conf/webdefaults.yml
+    - conf/users.yml
+  tasks:
+    - name: Install Web Server
+      yum:
+        name: httpd
+        state: present
+      when: 
+        - ansible_distribution == "CentOS"
+      notify: web_server_installed
+  handlers:
+    - name: web_server_installed
+      service:
+        name: httpd
+        state: restarted
+ 

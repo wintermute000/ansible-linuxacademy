@@ -1,0 +1,44 @@
+--- # My First Playbook
+- hosts: webhosts
+  connection: ssh
+  gather_facts: yes
+  become: yes
+  vars_files:
+    - conf/credentials.yml
+    - conf/copyright.yml
+    - conf/webdefaults.yml
+    - conf/users.yml
+  tasks:
+    - name: Timestamp start
+      command: 'date'
+      register: start_time
+
+    - name: Output start_time
+      debug: 
+        msg: 'The starting time is {{ start_time }}'
+
+    - name: Install apps
+      yum:
+        name: '{{ item }}'
+      loop:
+        - telnet
+        - lynx
+        - httpd
+
+    - name: List installed 
+      command: 'yum list installed --cacheonly'
+      register: installed_packages
+
+    - name: Output installed_packages
+      debug:
+        var: installed_packages.stdout_lines
+
+    - name: Timestamp end
+      command: 'date'
+      register: end_time
+
+    - name: Output end_time
+      debug:
+        msg: 'The starting time is {{ end_time }}'
+
+ 

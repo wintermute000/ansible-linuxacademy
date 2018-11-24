@@ -1,0 +1,14 @@
+--- # Copy module example 
+- hosts: all
+  connection: ssh
+  gather_facts: yes
+  become: yes
+  vars_files:
+    - conf/credentials.yml
+    - conf/copyright.yml
+    - conf/webdefaults.yml
+    - conf/users.yml
+  tasks:
+  - name: Copy from the files directory test file
+    action: copy src=files/testfile.txt dest=/home/test/testfile.txt owner=test group=test mode=0655 backup=yes
+ 

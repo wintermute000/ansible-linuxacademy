@@ -1,0 +1,23 @@
+--- # Pause module
+- hosts: all
+  connection: ssh
+  gather_facts: no
+  become: yes
+  vars_files:
+    - conf/credentials.yml
+    - conf/copyright.yml
+    - conf/webdefaults.yml
+    - conf/users.yml
+  tasks:
+    - name: Install Web Server
+      yum:
+        name: httpd
+        state: present
+    - name: Pause
+      pause:
+        prompt: "press ENTER to continue"
+    - name: check Lynx package installation state
+      yum:
+        name: lynx
+        state: present
+ 
