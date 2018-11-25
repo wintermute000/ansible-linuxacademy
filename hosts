@@ -1,0 +1,10 @@
+
+[local]
+localhost
+
+[webhosts]
+test2
+test3
+
+[apphosts]
+test4
