@@ -1,0 +1,34 @@
+--- # SElinux example with reboot
+- hosts: webhosts
+  connection: ssh
+  gather_facts: no
+  become: yes
+  vars_files:
+  - vars/users.yml
+  vars:
+  - playbook_version: 1.1
+  vars_prompt:
+    - name: "selinux_state"
+      prompt: "Enter SElinux State to Set"
+      default: "permissive"
+  tasks:
+    - name: Set SELinux to permissive and targeted
+      selinux:
+        policy: targeted
+        state: "{{ selinux_state }}"
+      notify: Restart OS
+
+    - name: force all notified handlers to run at this point, not waiting for normal sync points
+      meta: flush_handlers
+
+    - debug:
+        var: restart_var
+      when: restart_var is defined
+
+  handlers:
+    - name: Restart OS
+      reboot:
+        test_command: "uptime"
+      register: restart_var
+  
+

@@ -1,0 +1,27 @@
+--- # Install apt repository
+- hosts: all
+  connection: ssh
+  gather_facts: no
+  become: yes
+  vars_files:
+  - vars/repos.yml
+  tasks:
+    - debug:
+        var: repos_to_install
+
+    - name: install repo 
+      yum_repository:
+        name: "{{ item.repo_name }}"
+        baseurl: "{{ item.repo_baseurl }}"
+        gpgcakey:  "{{ item.repo_gpgcakey }}"
+        description: "{{ item.repo_description }}"
+        gpgcheck: yes
+        state: present
+      loop: "{{ repos_to_install }}" 
+      notify: refresh repos
+
+  handlers:
+    - name: refresh repos
+      command: yum makecache
+
+      

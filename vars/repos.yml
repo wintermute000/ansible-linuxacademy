@@ -1,0 +1,6 @@
+---
+repos_to_install:
+  - repo_name: google-chrome
+    repo_baseurl: http://dl.google.com/linux/chrome/rpm/stable/x86_64
+    repo_gpgcakey: https://dl.google.com/linux/linux_signing_key.pub
+    repo_description: "Google Chrome Stable Channel"

@@ -1,0 +1,15 @@
+--- # get_url demo 
+- hosts: all
+  connection: ssh
+  gather_facts: no
+  become: no
+  vars_files:
+  - vars/users.yml
+  vars:
+  - playbook_version: 1.1
+  tasks:
+    - name: Get URL
+      get_url:
+        url: http://www.ovh.net/files/1Mb.dat
+        dest: /home/test
+        mode: 0440

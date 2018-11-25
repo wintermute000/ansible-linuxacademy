@@ -1,0 +1,14 @@
+--- # groups demo 
+- hosts: all
+  connection: ssh
+  gather_facts: no
+  become: yes
+  vars_files:
+  - vars/users.yml
+  vars:
+  - playbook_version: 1.1
+  tasks:
+    - name: Add new group
+      group:
+        name: newgroup
+        state: present

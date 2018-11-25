@@ -1,0 +1,17 @@
+--- # set fact and variable example
+- hosts: all
+  connection: ssh
+  gather_facts: no
+  become: yes
+  vars_files:
+  - vars/users.yml
+  vars:
+  - playbook_version: 1.1
+  tasks:
+  - name: Set Fact
+    set_fact:
+      singlefact: 'Arbitrary'
+    register: fact_value
+
+  - debug:
+      msg: "The playbook_version variable is: {{ playbook_version }} and the singlefact variable is: {{ singlefact }}"

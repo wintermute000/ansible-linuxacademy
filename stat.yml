@@ -1,0 +1,14 @@
+--- # # Test for an arbitrary directory path in the remote /home/test directory, display a message using debug ONLY if the path exists
+- hosts: all
+  connection: ssh
+  gather_facts: no
+  become: yes
+  vars_files:
+  - vars/users.yml
+  vars:
+  - playbook_version: 1.1
+  tasks:
+     - stat: path=/home/test/abc
+       register: p
+     - debug: msg="The Path Exists and is a Directory"
+       when: p.stat.isdir is defined and p.stat.isdir
